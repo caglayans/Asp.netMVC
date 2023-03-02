@@ -1,0 +1,61 @@
+﻿@model ListViewModel
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Yönetici Ürünleri</h1>
+        <hr />
+        <a class="btn btn-primary btn-sm" asp-controller="Admin" asp-action="CreateProduct">Ürün Ekle</a>
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Resim</th>
+                    <th>İsim</th>
+                    <th>Fiyat</th>
+                    <th>Anasayfa</th>
+                    <th>Onaylı</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model.Products.Count > 0)
+                {
+                    @foreach (var item in Model.Products)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td><img src="~/images/@item.ImageUrl" width="80" /></td>
+                            <td>@item.Name</td>
+                            <td>@item.Price</td>
+                            <td>
+                                @if (item.IsHome)
+                                {<i class="fa-solid fa-circle-check"></i>}
+                                else
+                                {<i class="fa-solid fa-circle-xmark"></i>}
+                            </td>
+                            <td>
+                                @if (item.IsApproved)
+                                {<i class="fa-solid fa-circle-check"></i>}
+                                else
+                                {<i class="fa-solid fa-circle-xmark"></i>}
+                            </td>
+                            <td>
+                                <a asp-controller="Admin" asp-action="EditProduct" asp-route-id="@item.Id" class="btn btn-primary btn-sm mr-2">Güncelle</a>
+                                <a asp-controller="Admin" asp-action="DeleteProduct" asp-route-id="@item.Id" class="btn btn-danger btn-sm mr-2"> Sil </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <div class="alert alert-warning">
+                        <h3>Ürün bulunamadı!</h3>
+                    </div>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+

@@ -1,0 +1,114 @@
+﻿@model CategoryViewModel
+
+<h1 class="h3">Kategori Güncelle</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Admin" asp-action="EditCategory" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="mb-3 row">
+                <label asp-for="Name" class="col-sm-2 col-form-label">Ürün İsmi</label>
+                <div class="col-sm-10">
+                    <input class="form-control" asp-for="Name">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label asp-for="Url" class="col-sm-2 col-form-label">Url</label>
+                <div class="col-sm-10">
+                    <input class="form-control" asp-for="Url">
+                    <span asp-validation-for="Url" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <div class="col-sm-10 offset-sm-2">
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </div>
+
+            @for (int i = 0; i < Model.Products.Count; i++)
+            {
+                <div id="Products">
+                    <input type="hidden" name="Products[@i].Id" value="@Model.Products[i].Id" />
+                    <input type="hidden" name="Products[@i].Name" value="@Model.Products[i].Name" />
+                    <input type="hidden" name="Products[@i].ImageUrl" value="@Model.Products[i].ImageUrl" />
+                    <input type="hidden" name="Products[@i].Price" value="@Model.Products[i].Price" />
+                    <input type="hidden" name="Products[@i].IsApproved" value="@Model.Products[i].IsApproved.ToString()" />
+                    <input type="hidden" name="Products[@i].IsHome" value="@Model.Products[i].IsHome.ToString()" />
+                </div>
+            }
+        </form>
+    </div>
+
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Resim</th>
+                            <th>İsim</th>
+                            <th>Fiyat</th>
+                            <th>Anasayfa</th>
+                            <th>Onaylı</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model.Products.Count > 0)
+                        {
+                            @foreach (var item in Model.Products)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td><img src="~/images/@item.ImageUrl" width="80" /></td>
+                                    <td>@item.Name</td>
+                                    <td>@item.Price</td>
+                                    <td>
+                                        @if (item.IsHome)
+                                        {<i class="fa-solid fa-circle-check"></i>}
+                                        else
+                                        {<i class="fa-solid fa-circle-xmark"></i>}
+                                    </td>
+                                    <td>
+                                        @if (item.IsApproved)
+                                        {<i class="fa-solid fa-circle-check"></i>}
+                                        else
+                                        {<i class="fa-solid fa-circle-xmark"></i>}
+                                    </td>
+                                    <td>
+                                        <a asp-controller="Admin" asp-action="EditProduct" asp-route-id="@item.Id" class="btn btn-primary btn-sm mr-2">Güncelle</a>
+                                        <a asp-controller="Admin" asp-action="DeleteFromCategory" asp-route-Pid="@item.Id" asp-route-Cid="@Model.Id" class="btn btn-danger btn-sm mr-2"> Sil </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <div class="alert alert-warning">
+                                Ürün bulunamadı!
+                            </div>
+                        }
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    
+
+}
+
+

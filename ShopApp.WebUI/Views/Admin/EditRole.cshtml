@@ -1,0 +1,59 @@
+﻿
+@model EditRoleViewModel
+
+<h1 class="h3">Rolü Düzenle</h1>
+<hr />
+
+<form method="post" class="mt-3">
+    <div class="form-group row mb-2">
+        <label asp-for="Id" class="col-sm-1 col-form-label">İd</label>
+        <div class="col-sm-11">
+            <input asp-for="Id" disabled class="form-control">
+        </div>
+    </div>
+    <div class="form-group row mb-2">
+        <label asp-for="RoleName" class="col-sm-1 col-form-label">İsim</label>
+        <div class="col-sm-11">
+            <input asp-for="RoleName" class="form-control">
+            <span asp-validation-for="RoleName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group row">
+        <div class="col-sm-11">
+            <button type="submit" class="btn btn-primary">Güncelle</button>
+            <a asp-controller="admin" asp-action="RoleList" class="btn btn-primary">İptal Et</a>
+        </div>
+    </div>
+
+
+    <div class="card mt-3">
+        <div class="card-header">
+            <h5>Bu roldeki kullanıcılar</h5>
+        </div>
+        <div class="card-body">
+            @if (Model.Users.Any())
+            {
+                foreach (var user in Model.Users)
+                {
+                    <h6 class="card-title">@user</h6>
+                }
+            }
+            else
+            {
+                <h6 class="card-title">Role ait kullanıcı yok.</h6>
+            }
+        </div>
+        <div class="card-footer">
+            <a asp-controller="Admin" asp-action="EditUsersInRole" asp-route-roleId="@Model.Id" class="btn btn-primary" style="width:auto">Kullanıcı Ekle </a>
+            <a asp-controller="Admin" asp-action="EditUsersInRole" asp-route-roleId="@Model.Id" class="btn btn-primary" style="width:auto">Kullanıcı Kaldır</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

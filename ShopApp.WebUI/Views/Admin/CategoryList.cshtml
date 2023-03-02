@@ -1,0 +1,45 @@
+﻿@model ListViewModel
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Yönetici Ketegoleri</h1>
+        <hr />
+        <a class="btn btn-primary btn-sm" asp-controller="Admin" asp-action="CreateCategory">Kategori Ekle</a>
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>İsim</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model.Categories.Count > 0)
+                {
+                    @foreach (var item in Model.Categories)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Name</td>
+                            <td>
+                                <a asp-controller="Admin" asp-action="EditCategory" asp-route-id="@item.Id" class="btn btn-primary btn-sm mr-2">Güncelle</a>
+                                <a asp-controller="Admin" asp-action="DeleteCategory" asp-route-id="@item.Id" class="btn btn-danger btn-sm mr-2"> Sil </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <div class="alert alert-warning">
+                        Kategori bulunamadı!
+                    </div>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+

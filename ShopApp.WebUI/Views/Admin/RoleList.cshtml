@@ -1,0 +1,44 @@
+﻿@model IEnumerable<IdentityRole>
+
+
+<h1 class="h3">Roller</h1>
+<hr />
+
+@if (Model.Any())
+{
+    <a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateRole"
+       asp-controller="admin">Yeni Rol Oluştur</a>
+
+    foreach (var role in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                İd : @role.Id
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@role.Name</h5>
+            </div>
+            <div class="card-footer">
+                <a asp-controller="Admin" asp-action="EditRole" asp-route-id="@role.Id" class="btn btn-primary btn-sm mr-2">Düzenle</a>
+                <a asp-controller="Admin" asp-action="DeleteRole" asp-route-id="@role.Id" class="btn btn-danger btn-sm mr-2">Sil</a>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="card">
+        <div class="card-header alert-warning">
+            Henüz oluşturulmuş rol yok.
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Rol oluşturmak için aşağıdaki butona tıklayınız.
+            </h5>
+            <a class="btn btn-primary" style="width:auto"
+               asp-controller="admin" asp-action="CreateRole">
+                Rol Ekle
+            </a>
+        </div>
+    </div>
+}

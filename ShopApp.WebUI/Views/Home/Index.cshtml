@@ -1,0 +1,32 @@
+﻿@using ShopApp.Entity;
+
+@model List<Product>
+
+@section Jumbotron{
+
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container py-5">
+            <h1 class="display-3">Shop App</h1>
+            <p class="col-md-12 fs-4">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque id, eum explicabo sed est hic corrupti et impedit, quasi quis alias, qui provident natus enim tempore? Nesciunt repellendus debitis minus!
+
+            </p>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @await Component.InvokeAsync("Categories")
+    </div>
+    <div class="col-md-9">
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                <div class="col-md-4">
+                    @await Html.PartialAsync("_product", product)
+                </div>
+            }
+        </div>
+    </div>
+</div>
